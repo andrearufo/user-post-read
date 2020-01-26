@@ -58,11 +58,10 @@ function upr_install_data() {
 }
 
 function upr_post_opened( ) {
-
     if( is_singular() ){
         $post_id = get_the_ID();
         $user_id = get_current_user_id();
-        $has_read = has_read($post_id, $user_id);
+        $has_read = upr_has_read($post_id, $user_id);
 
         if( $post_id > 0 && $user_id > 0 && !$has_read ){
             global $wpdb;
@@ -79,7 +78,7 @@ function upr_post_opened( ) {
 }
 add_action( 'wp', 'upr_post_opened' );
 
-function has_read($post_id = null, $user_id = null){
+function upr_has_read($post_id = null, $user_id = null){
     if($user_id == null && !is_user_logged_in()){
         return false;
     }elseif($user_id == null){
